@@ -27,11 +27,11 @@ const AloneHata = "#f30707";
 
 const emmmmbed = new Discord.MessageEmbed()
 .setThumbnail()
-.addField(`Bessinger | Teşekkürler`, `**Selamlar, Ben Bessinger Öncelikle Botumuzu Eklediğiniz ve Bize Destek Olduğunuz İçin Sizlere Teşekkürlerimi Sunarım**`)
-.addField(`Alone | Prefix`, `** Botun Prefixi(ön eki) = \`${fynx.prefix}\`\n\n Değiştirebilmek için \`${fynx.prefix}prefix\` Yazabilirsiniz.**`)
-.addField(`Bessinger | Nasıl Kullanılır?`, `**Bessinger botun tüm özelliklerinden yararlanabilmek için sadece \`${fynx.prefix}yardım\` yazmanız yeterlidir.**`)
-.addField(`Bessinger | Linkler`, `**Sohbet Kanalına -davet Yazmanız Yeterlidir**`)
-.setFooter(`Bessinger | Gelişmiş Türkçe Bot | 2020`)
+.addField(`Lord Creative | Teşekkürler`, `**Selamlar, Ben Lord Creative (Lord Creative'nin Geliştiricisi) Öncelikle Botumuzu Eklediğiniz ve Bize Destek Olduğunuz İçin Sizlere Teşekkürlerimi Sunarım**`)
+.addField(`Alone | Prefix`, `**Lord Creative Botun Prefixi(ön eki) = \`${fynx.prefix}\`\n\n Değiştirebilmek için \`${fynx.prefix}prefix\` Yazabilirsiniz.**`)
+.addField(`Lord Creative | Nasıl Kullanılır?`, `**Lord Creative botun tüm özelliklerinden yararlanabilmek için sadece \`${fynx.prefix}yardım\` yazmanız yeterlidir.**`)
+.addField(`Lord Creative | Linkler`, `**Sohbet Kanalına -davet Yazmanız Yeterlidir**`)
+.setFooter(`Lord Creative | Gelişmiş Türkçe Bot | 2020`)
 .setTimestamp();
 
 
@@ -147,7 +147,7 @@ setInterval(function() {
 
 client.on('message', async msg => {
   let prefix = await db.fetch(`prefix.${msg.guild.id}`) || fynx.prefix 
-  if(msg.content == `<@!713713727794446397>`) return msg.channel.send(`> **Bessinger | Prefix**\n\n> <:a_:821738957997211659>  **Sanırım beni etiketlediniz.**\n > <:a_:821738957997211659>  Buyurun prefix(ön ek)im \`${prefix}\``);
+  if(msg.content == `<@!713713727794446397>`) return msg.channel.send(`> **Lord Creative | Prefix**\n\n> <:a_:821738957997211659>  **Sanırım beni etiketlediniz.**\n > <:a_:821738957997211659>  Buyurun prefix(ön ek)im \`${prefix}\``);
 });
 
 
@@ -165,7 +165,7 @@ if (!modlogkanal) return;
   .setColor("#ffffff")
   .setTitle("MESAJ SİLİNDİ")
 .setDescription(`<:a_:821738957997211659>  <@!${message.author.id}> **adlı kullanıcı tarafından** <#${message.channel.id}> **kanalına gönderilen mesaj silindi!** \n\nSilinen Mesaj: **${message.content}**`)
-  .setFooter("Bessinger Bot | Log Sistemi")
+  .setFooter("Lord Creative Bot | Log Sistemi")
   modlogkanal.send(embed);
   })
 
@@ -178,7 +178,7 @@ if (!modlogkanal) return;
 
     .setDescription(`<:a_:821738957997211659>  **Üye Sunucudan Yasaklandı!** \n<@!${message.user.id}>, ${message.user.tag}`)
         .setThumbnail(message.user.avatarURL)
-  .setFooter("Bessinger Bot | Log Sistemi")
+  .setFooter("Lord Creative Bot | Log Sistemi")
   modlogkanal.send(embed);
   })
 
@@ -191,7 +191,7 @@ if (!modlogkanal) return;
                     .setColor('#ffffff')
                 .setTitle("METİN KANALI OLUŞTURULDU")
                 .setDescription(`<:a_:821738957997211659>  ${channel.name} **Adlı Metin Kanalı Oluşturuldu!**`)
-                .setFooter(`Bessinger Bot | Log Sistemi Kanal ID: ${channel.id}`)
+                .setFooter(`Lord Creative Bot | Log Sistemi Kanal ID: ${channel.id}`)
                 modlogkanal.send({embed});
             };
             if (channel.type === "voice") {
@@ -199,7 +199,7 @@ if (!modlogkanal) return;
                 .setColor('#ffffff')
 .setTitle("SES KANALI OLUŞTURULDU")
                 .setDescription(`<:a_:821738957997211659>  ${channel.name} **Adlı Ses Kanalı Oluşturuldu!**`)
-                .setFooter(`Bessinger Bot | Log Sistemi Kanal ID: ${channel.id}`)
+                .setFooter(`Lord Creative Bot | Log Sistemi Kanal ID: ${channel.id}`)
 
                 modlogkanal.send({embed});
             }
@@ -213,7 +213,7 @@ if (!modlogkanal) return;
                 let embed = new Discord.MessageEmbed()
                     .setColor('#ffffff')
                 .setDescription(`<:a_:821738957997211659>  ${channel.name} **Adlın Metin Kanalı  Silindi**`)
-                .setFooter(`Bessinger Bot | Log Sistemi Kanal ID: ${channel.id}`)
+                .setFooter(`Lord Creative Bot | Log Sistemi Kanal ID: ${channel.id}`)
                 modlogkanal.send({embed});
             };
             if (channel.type === "voice") {
@@ -221,7 +221,7 @@ if (!modlogkanal) return;
                 .setColor('#ffffff')
 .setTitle("SES KANALI SİLİNDİ")
                 .setDescription(`<:a_:821738957997211659>  ${channel.name} **Adlı Ses Kanalı Silindi**`)
-            .setFooter(`Bessinger Bot | Log Sistemi  Kanal ID: ${channel.id}`)
+            .setFooter(`Lord Creative Bot | Log Sistemi  Kanal ID: ${channel.id}`)
                 modlogkanal.send({embed});
             }
     })
