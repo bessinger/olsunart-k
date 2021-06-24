@@ -1,20 +1,28 @@
 const Discord = require('discord.js');
 const db = require('quick.db')
-exports.run = (client, message, args) => { 
+exports.run = (client, message, args) => {
 
-if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(`<:a_:821738957997211659>  **Bu komutu kullanabilmek için** "\`Yönetici\`" **yetkisine sahip olmalısın.**`);
- const rol = db.fetch(`otoRL_${message.guild.id}`)  
- if(!rol) return message.reply(`<:a_:821738957997211659>   **Bu özellik zaten kapalı! :wink: **`)
- 
- 
-  message.channel.send(`<:a_:821738957997211659>   **Kayıt Sistemi başarılı bir şekilde kapatıldı.**`)
+if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(`Bu komutu kullanabilmek için "\`Yönetici\`" yetkisine sahip olmalısın.`);
+ const rol = db.fetch(`otoRL_${message.guild.id}`)
+ if(!rol) return message.reply(`<:red:729390621093003275> Sanırım bu özellik zaten kapalıymış `)
 
- 
-  db.delete(`otoRL_${message.guild.id}`)  
-  db.delete(`otoRK_${message.guild.id}`) 
-  db.delete(`otoRM_${message.guild.id}`)  
+
+  message.reply(`<:onay:729390621193666680> Bu özellik **başarıyla kapatıldı.**`)
+
+
+  db.delete(`otoRL_${message.guild.id}`)
+  db.delete(`otoRK_${message.guild.id}`)
+  db.delete(`otoRM_${message.guild.id}`)
 };
-exports.config = {
-  name: 'oto-rol-kapat',
-  aliases: ["otorol-kapat", "otorolkapat"]
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: ["otorol-kapat", "otorolkapat"],
+  permLevel: 2
+};
+
+exports.help = {
+  name: 'otorol-kapat',
+  description: 'taslak',
+  usage: 'otorol-kapat'
 };

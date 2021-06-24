@@ -1,39 +1,31 @@
-const { MessageEmbed } = require("discord.js");
+const Discord = require('discord.js')
 
-module.exports.run = async (bot, message, args) => {
-        if (!args[0]) return message.channel.send("**Lütfen Bir Rol Girin!**")
-        let rol = message.mentions.roles.first() || message.guild.roles.cache.get(args[0]) || message.guild.roles.cache.find(r => r.name.toLowerCase() === args.join(' ').toLocaleLowerCase());
-        if (!rol) return message.channel.send("**Lütfen Geçerli Bir Rol Girin!**");
+exports.run = (client, message, args) => {
+	try {
+		const embed = new Discord.RichEmbed()
+			.addField(`Sunucuda Bulunan Roller`, message.guild.roles.filter(r => r.name !== "@everyone").map(r => r).join(' | '))
+			.setColor(0x00ffff)
+			.setTimestamp()
+		message.channel.send({embed})
+	} catch (err) {
+		const embed = new Discord.RichEmbed()
+			.addField(`Sunucuda Bulunan Roller`, 'Üzgünüm ama sunucunuzda ya çok fazla rol bulunuyor ya da hiç rol bulunmuyor. Bunları gösteremiyorum. Discord buna izin vermiyor.')
+			.setColor(0x00ffff)
+			.setTimestamp()
+		message.channel.send({embed})
+	}
+}
 
-        const bahset = {
-            false: "Hayır",
-            true: "Evet"
-        }
-
-        let enes = new MessageEmbed()
-            .setColor("#00ff00")
-            .setAuthor("Rol Bilgi")
-            .setThumbnail(message.guild.iconURL())
-            .addField("**Rol ID**", `\`${rol.id}\``, true)
-            .addField("**Rol İsmi**", rol.name, true)
-            .addField("**Renk Kodu**", rol.hexColor)
-            .addField("**Sahip Üyeler**", rol.members.size)
-            .addField("**Poziyon**", rol.position)
-            .addField("**Bahsedilebilir**", bahset[rol.mentionable])
-            .setFooter(message.member.displayName, message.author.displayAvatarURL())
-            .setTimestamp()
-
-        message.channel.send(enes);
-    }
-  exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: ['rolbilgi'],
-  permLevel: 0
-};
+exports.conf = {
+	enabled: true,
+	guildOnly: true,
+	aliases: ['roles'],
+	permLevel: 1,
+	kategori: 'kullanıcı'
+}
 
 exports.help = {
-  name: 'Rolbilgi',
-  description: 'Rol Hakkında Bilgi Verir.',
-  usage: 'rolbilgi'
-};
+	name: 'roller',
+	description: 'Sunucuda bulunan rolleri gösterir.',
+	usage: 'roller'
+}

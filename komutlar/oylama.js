@@ -7,21 +7,21 @@ const Discord = require('discord.js');
 
    let user = message.author.username
 
-   if (!question) return message.channel.send(
+   if (!question) return message.channel.sendEmbed(
 
-     new Discord.MessageEmbed()
+     new Discord.RichEmbed()
 
-     .addField(`:x: **Yazı Yazman Gerek** :x:`)).then(m => m.delete(5000));
+     .addField(`:x:yazı yazman gerek :x:`)).then(m => m.delete(5000));
 
-     console.log("oylama komutu " + message.author.username + '#' + message.author.discriminator + " tarafından kullanıldı.")
-     message.channel.send(
+     console.log("/oylama komutu " + message.author.username + '#' + message.author.discriminator + " tarafından kullanıldı.")
+     message.channel.sendEmbed(
 
-       new Discord.MessageEmbed()
+       new Discord.RichEmbed()
 
-       .setColor("RED")
-       .setThumbnail(client.user.avatarURL())
+       .setColor("RANDOM")
+       .setThumbnail(client.user.avatarURL)
        .setTimestamp()
-       .setFooter('Oylama Sistemi', client.user.avatarURL())
+       .setFooter('Bessinger', client.user.avatarURL)
 
        .addField(`**Oylama**`, `**${question}**`)).then(function(message) {
 
@@ -38,11 +38,11 @@ const Discord = require('discord.js');
        guildOnly: false,
        aliases: ['oylama'],
 
-  permLevel: 3
+  permLevel: 2
 };
 
 exports.help = {
   name: 'oylama',
   description: 'Oylama yapmanızı sağlar.',
-  usage: 'oylama <oylamaismi>'
+  usage: '₺oylama <oylamaismi>'
 };

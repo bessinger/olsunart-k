@@ -1,61 +1,42 @@
-const Discord = require("discord.js");
-const db = require("quick.db");
-module.exports.run = async (bot, message, args) => {
-  let prefix = "!";
-  if (!message.member.hasPermission("KICK_MEMBERS")) {
-    const embed = new Discord.MessageEmbed()
-      .setDescription("bu komutu kullanmak için yetkin yeterli değil!")
-      .setColor("RED");
+const Discord = require('discord.js');
+const client = new Discord.Client();
 
-    message.channel.send(embed);
-    return;
-  }
+exports.run = (client, message, args) => {
+  if (!message.guild) {
+  const ozelmesajuyari = new Discord.RichEmbed()
+  .setColor(0xFF0000)
+  .setTimestamp()
+  .setAuthor(message.author.username, message.author.avatarURL)
+  .addField(':warning: Uyarı :warning:', '`ban` adlı komutu özel mesajlarda kullanamazsın.')
+  return message.author.sendEmbed(ozelmesajuyari); }
+  let guild = message.guild
+  let reason = args.slice(1).join(' ');
+  let user = message.mentions.users.first();
+  if (reason.length < 1) return message.reply('Ban sebebini yazmalısın.');
+  if (message.mentions.users.size < 1) return message.reply('Kimi banlayacağını yazmalısın.').catch(console.error);
 
-  let u = message.mentions.users.first();
-  if (!u) {
-    return message.channel.send(
-      new Discord.MessageEmbed()
-        .setDescription("Lütfen sunucudan yasaklanacak kişiyi etiketleyiniz!")
-        .setColor("BLACK")
-        .setFooter(bot.user.username, bot.user.avatarURL())
-    );
-  }
+  if (!message.guild.member(user).bannable) return message.reply('Yetkilileri banlayamam.');
+  message.guild.ban(user, 2,676886594581692427);
 
-  const embed = new Discord.MessageEmbed()
-    .setColor("BLACK")
-    .setDescription(`${u} Adlı şahsın yasaklanmasını onaylıyor musunuz?:banned: `)
-    .setFooter(`bot.user.username, bot.user.avatarURL()`);
-  message.channel.send(embed).then(async function(sentEmbed) {
-    const emojiArray = [":white_check_mark:"];
-    const filter = (reaction, user) =>
-      emojiArray.includes(reaction.emoji.name) && user.id === message.author.id;
-    await sentEmbed.react(emojiArray[0]).catch(function() {});
-    var reactions = sentEmbed.createReactionCollector(filter, {
-      time: 30000
-    });
-    reactions.on("end", () => sentEmbed.edit("İşlem iptal oldu!:banned:"));
-    reactions.on("collect", async function(reaction) {
-      if (reaction.emoji.name === ":white_check_mark:") {
-        message.channel.send(`
-          İşlem onaylandı! ${u} adlı şahıs sunucudan yasaklandı:banned:
-        `);
-
-        message.guild.member(u, 2).ban();
-      }
-    });
-  });
+  const embed = new Discord.RichEmbed()
+    .setColor(0x00AE86)
+    .setTimestamp()
+    .addField('Eylem:', 'Sunucudan Yasaklama :bangbang: ')
+    .addField('Yasaklanan Kullanıcı:', `${user.username}#${user.discriminator} (${user.id})`)
+    .addField('Yasaklayan Yetkili:', `${message.author.username}#${message.author.discriminator}`)
+    .addField('Yasaklama Sebebi:', reason);
+  return message.channel.sendEmbed(embed);
 };
 
-module.exports.conf = {
-  aliases: [],
-  permLevel: 3,
+exports.conf = {
   enabled: true,
   guildOnly: true,
-  kategori: "moderasyon"
+  aliases: [],
+  permLevel: 2
 };
 
-module.exports.help = {
-  name: "ban",
-  description: "ban",
-  usage: "ban"
+exports.help = {
+  name: 'ban',
+  description: 'İstediğiniz kişiyi sunucudan yasaklar.',
+  usage: 'ban [kullanıcı] [sebep]'
 };

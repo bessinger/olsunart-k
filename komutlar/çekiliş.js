@@ -56,29 +56,29 @@ var filter = m => m.author.id === message.author.id;
                 msg.delete();
                 message.delete();
                 try {
-                  let giveEmbed = new Discord.MessageEmbed()
+                  let giveEmbed = new Discord.RichEmbed()
                   .setColor("#f558c9")
                   .setDescription(`**Ödül: ${title}** \n🎉'a Basarak Katıl \nKalan Süre : ${duration} \n **Başlama Zamanı :** ${hours}:${minutes}:${seconds} ${suffix}`)
-                  .setFooter(message.author.username + " (Plasmic çekiliş sistemi)", message.author.avatarURL);
+                  .setFooter(message.author.username + " (TrexBot çekiliş sistemi)", message.author.avatarURL);
                   message.guild.channels.find("name" , room).send(' :heavy_check_mark: **ÇEKİLİŞ BAŞLADI** :heavy_check_mark:' , {embed: giveEmbed}).then(m => {
                      let re = m.react('🎉');
                      setTimeout(() => {
                        let users = m.reactions.get("🎉").users
                        let list = users.array().filter(u => u.id !== m.author.id !== client.user.id);
                        let gFilter = list[Math.floor(Math.random() * list.length) + 0]
-                       let endEmbed = new Discord.MessageEmbed()
+                       let endEmbed = new Discord.RichEmbed()
                        .setAuthor(message.author.username, message.author.avatarURL)
                        .setTitle(title)
                        .setColor("#f558c9")
-            .setFooter("(Plasmic çekiliş sistemi)")
+            .setFooter("(TrexBot çekiliş sistemi)")
                        .addField('Çekiliş Bitti !🎉',`Kazanan : ${gFilter} \nBitiş zamanı :`)
                        .setTimestamp()
                      m.edit('** 🎉 ÇEKİLİŞ BİTTİ 🎉**' , {embed: endEmbed});
                        
-                       var plasmic = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setDescription("Ödülünü Moderatörleri Etiketleyerek Alabilirsin!").setFooter("(RTX-Bot çekiliş sistemi)")
-                    message.guild.channels.find("name" , room).send(`**Tebrikler ${gFilter}! \`${title}\` kazandın!**` , plasmic)
+                       var embedLel = new Discord.RichEmbed()
+                        .setColor("#f558c9")
+                        .setDescription("Ödülünü Moderatörleri Etiketleyerek Alabilirsin!").setFooter("(TrexBot çekiliş sistemi)")
+                    message.guild.channels.find("name" , room).send(`**Tebrikler ${gFilter}! \`${title}\` kazandın!**` , embedLel)
                 }, ms(duration));
             });
                 } catch(e) {
@@ -102,7 +102,7 @@ exports.conf = {
 };
 exports.help = {
   name: 'çekiliş',
-  description: 'Çekiliş mi?? Sunucunda güzel şeyler olacak :3',
+  description: 'Çekiliş mi? Sunucunda güzel şeyler olacak :3',
   usage: 'çekiliş'
 };
    

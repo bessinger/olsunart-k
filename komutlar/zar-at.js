@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 
 exports.run = function(bot, message) {
-    message.channel.send(new Discord.MessageEmbed()
+    message.channel.sendEmbed(new Discord.RichEmbed()
     .setColor(message.guild.me.displayHexColor)
     .setTitle('🎲 Zarın: ' + doMagicDiceVoodoo()));
 
@@ -14,7 +14,7 @@ exports.run = function(bot, message) {
 
 exports.conf = {
   enabled: true,
-  aliases: ['zar','zar-at'],
+  aliases: ['zar'],
   guildOnly: false,
   permLevel: 0
 };
@@ -22,5 +22,5 @@ exports.conf = {
 exports.help = {
   name: 'zarat',
   description: 'Zar Atın',
-  usage: 'zarat'
+  usage: ''
 };

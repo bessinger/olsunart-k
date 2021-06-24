@@ -1,59 +1,40 @@
-const Discord = require("discord.js");
-const db = require("quick.db");
-module.exports.run = async (bot, message, args) => {
-  let prefix = "!";
-  if (!message.member.hasPermission("KICK_MEMBERS")) {
-    const embed = new Discord.MessageEmbed()
-      .setDescription('Malesef bu komutu sen kullanamazsın!')
-      .setColor("RANDOM");
+const Discord = require('discord.js');
+exports.run = (client, message, args) => {
+  if (!message.guild) {
+  const ozelmesajuyari = new Discord.RichEmbed()
+  .setColor(0xFF0000)
+  .setTimestamp()
+  .setAuthor(message.author.username, message.author.avatarURL)
+  .addField(':warning: Uyarı :warning:', '`kick` adlı komutu özel mesajlarda kullanamazsın.')
+  return message.author.sendEmbed(ozelmesajuyari); }
+  let guild = message.guild
+  let reason = args.slice(1).join(' ');
+  let user = message.mentions.users.first();
+  if (reason.length < 1) return message.reply('Sunucudan atma sebebini yazmalısın.');
+  if (message.mentions.users.size < 1) return message.reply('Kimi sunucudan atacağını yazmalısın.').catch(console.error);
 
-    message.channel.send(embed);
-    return;
-  }
+  if (!message.guild.member(user).kickable) return message.reply('Yetkilileri sunucudan atamam.');
+  message.guild.member(user,676886594581692427,2).kick();
 
-  let u = message.mentions.users.first();
-  if (!u) {
-    return message.channel.send(
-      new Discord.MessageEmbed()
-        .setDescription("Lütfen atılacak kişiyi etiketleyiniz!")
-        .setColor("RANDOM")
-        .setFooter(bot.user.username, bot.user.avatarURL())
-    );
-  }
-
-  const embed = new Discord.MessageEmbed()
-    .setColor("RANDOM")
-    .setDescription("{u} Adlı şahsın sunucudan atılmasını onaylıyor musunuz?:verified:")
-    .setFooter(bot.user.username, bot.user.avatarURL());
-  message.channel.send(embed).then(async function(sentEmbed) {
-    const emojiArray = [":white_check_mark:"];
-    const filter = (reaction, user) =>
-      emojiArray.includes(reaction.emoji.name) && user.id === message.author.id;
-    await sentEmbed.react(emojiArray[0]).catch(function() {});
-    var reactions = sentEmbed.createReactionCollector(filter, {
-      time: 30000
-    });
-    reactions.on("end", () => sentEmbed.edit("İşlem iptal oldu!:verified:"));
-    reactions.on("collect", async function(reaction) {
-      if (reaction.emoji.name === ":white_check_mark:") {
-        message.channel.send("İşlem onaylandı ${u} adlı kişi sunucudan atıldı");
-
-        message.guild.member(u).kick();
-      }
-    });
-  });
+  const embed = new Discord.RichEmbed()
+    .setColor(0x00AE86)
+    .setTimestamp()
+    .addField('Eylem:', 'Sunucudan atma :bangbang: ')
+    .addField('Atılan Kullanıcı:', `${user.username}#${user.discriminator} (${user.id})`)
+    .addField('Atan Yetkili:', `${message.author.username}#${message.author.discriminator}`)
+    .addField('Atma Sebebi: ', reason);
+  return message.channel.sendEmbed(embed);
 };
 
-module.exports.conf = {
-  aliases: [],
-  permLevel: 3,
+exports.conf = {
   enabled: true,
   guildOnly: true,
-  kategori: "moderasyon"
+  aliases: ['at'],
+  permLevel: (2,676886594581692427)
 };
 
-module.exports.help = {
-  name: "kick",
-  description: "kick",
-  usage: "kick"
+exports.help = {
+  name: 'kick',
+  description: 'İstediğiniz kişiyi sunucudan atar.',
+  usage: 'kick [kullanıcı] [sebep]'
 };
